@@ -1,0 +1,149 @@
+import { VerticalBox } from "std-widgets.slint";
+
+component GlassCard inherits Rectangle {
+    in property <string> card-text-1;
+    in property <string> card-text-2;
+    in property <string> card-text-3;
+    in property <string> card-text-4;
+    in property <color> text-color: rgb(0, 0, 0);
+    in property <length> corner-radius: 24px;
+    
+    // 毛玻璃效果背景（Acrylic 材质）
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: corner-radius;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.6);
+    
+    // 多层阴影效果（iOS/WinUI 风格）
+    Rectangle {
+        x: 0px;
+        y: 2px;
+        width: parent.width;
+        height: parent.height;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: corner-radius;
+        z: -2;
+    }
+    
+    Rectangle {
+        x: 0px;
+        y: 8px;
+        width: parent.width;
+        height: parent.height;
+        background: rgba(0, 0, 0, 0.02);
+        border-radius: corner-radius;
+        z: -3;
+    }
+    
+    VerticalBox {
+        alignment: center;
+        spacing: 20px;
+        padding: 56px;
+        
+        Text {
+            text: card-text-1;
+            font-size: 56px;
+            font-weight: 600;
+            color: text-color;
+            horizontal-alignment: center;
+            letter-spacing: -1px;
+        }
+        
+        Text {
+            text: card-text-2;
+            font-size: 56px;
+            font-weight: 600;
+            color: text-color;
+            horizontal-alignment: center;
+            letter-spacing: -1px;
+        }
+        
+        Text {
+            text: card-text-3;
+            font-size: 56px;
+            font-weight: 600;
+            color: text-color;
+            horizontal-alignment: center;
+            letter-spacing: -1px;
+        }
+        
+        Text {
+            text: card-text-4;
+            font-size: 56px;
+            font-weight: 600;
+            color: text-color;
+            horizontal-alignment: center;
+            letter-spacing: -1px;
+        }
+        
+        Text {
+            text: "Fluent Design · iOS Style";
+            font-size: 16px;
+            color: rgba(0, 0, 0, 0.6);
+            horizontal-alignment: center;
+            font-weight: 400;
+        }
+    }
+}
+
+export component AppWindow inherits Window {
+    in-out property <string> hello-slint: "hello slint";
+    in-out property <string> hello-cpp: "hello c++";
+    in-out property <string> hello-taskflow: "hello taskflow";
+    in-out property <string> hello-kokkos: "hello kokkos";
+    
+    width: 800px;
+    height: 850px;
+    title: "Hello Slint";
+    // WinUI 3 / iOS 风格的渐变背景
+    background: rgb(240, 242, 247);
+
+    // 背景渐变层（模拟 iOS/WinUI 的柔和渐变）
+    Rectangle {
+        width: 100%;
+        height: 100%;
+        background: @linear-gradient(180deg, 
+            rgb(240, 242, 247) 0%, 
+            rgb(230, 235, 245) 50%,
+            rgb(220, 228, 240) 100%);
+        z: 0;
+    }
+    
+    // 装饰性光晕效果
+    Rectangle {
+        x: 200px;
+        y: 120px;
+        width: 400px;
+        height: 400px;
+        background: rgba(99, 102, 241, 0.08);
+        border-radius: 200px;
+        z: 1;
+    }
+    
+    Rectangle {
+        x: 160px;
+        y: 360px;
+        width: 300px;
+        height: 300px;
+        background: rgba(139, 92, 246, 0.06);
+        border-radius: 150px;
+        z: 1;
+    }
+
+    VerticalBox {
+        alignment: center;
+        spacing: 0px;
+        padding: 80px;
+        z: 2;
+        
+        GlassCard {
+            card-text-1: hello-slint;
+            card-text-2: hello-cpp;
+            card-text-3: hello-taskflow;
+            card-text-4: hello-kokkos;
+            text-color: rgb(15, 23, 42);
+            width: 100%;
+            height: 560px;
+        }
+    }
+}
